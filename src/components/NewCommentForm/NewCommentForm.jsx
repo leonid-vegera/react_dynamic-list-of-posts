@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
-import { createComment } from '../../api/comments';
-import { getPostDetails } from '../../api/posts';
+import { createComment, getPostComments } from '../../api/comments';
 import './NewCommentForm.scss';
 
 export const NewCommentForm = ({ postId }) => {
@@ -22,7 +21,8 @@ export const NewCommentForm = ({ postId }) => {
         event.preventDefault();
         createComment(postId, name, email, body);
         clearState();
-        getPostDetails(postId);
+        // как запустить перерендер после сабмита??
+        getPostComments(postId);
       }}
     >
       <div className="form-field">

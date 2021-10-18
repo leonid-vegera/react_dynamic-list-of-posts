@@ -60,8 +60,8 @@ export const PostDetails = ({ selectedPostId }) => {
                   type="button"
                   className="PostDetails__remove-button button"
                   onClick={() => {
-                    // setPostCommentId(comment.id);
                     removeComment(comment.id);
+                    // как запустить перерендер после удаления??
                     getPostComments(selectedPostId)
                       .then((result) => {
                         setPostComments(result);
