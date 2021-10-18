@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { createComment, getPostComments } from '../../api/comments';
 import './NewCommentForm.scss';
 
-export const NewCommentForm = ({ postId }) => {
+export const NewCommentForm = ({ postId, postComments, setPostComments }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
@@ -20,8 +20,10 @@ export const NewCommentForm = ({ postId }) => {
       onSubmit={(event) => {
         event.preventDefault();
         createComment(postId, name, email, body);
+        setPostComments([...postComments, {
+          name, email, body, id: Math.random(),
+        }]);
         clearState();
-        // как запустить перерендер после сабмита??
         getPostComments(postId);
       }}
     >
@@ -77,4 +79,13 @@ export const NewCommentForm = ({ postId }) => {
 
 NewCommentForm.propTypes = {
   postId: propTypes.number.isRequired,
+  postComments: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.number.isRequired,
+      name: propTypes.string.isRequired,
+      body: propTypes.string.isRequired,
+      email: propTypes.string.isRequired,
+    }),
+  ).isRequired,
+  setPostComments: propTypes.func.isRequired,
 };
